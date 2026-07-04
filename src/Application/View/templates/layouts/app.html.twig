@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="{{ locale()|default('en')|e('html_attr') }}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}{{ page_title()|default(title|default('Semitexa')) }}{% endblock %}</title>
+    {#
+        platform-ui: grammar + primitives (neutral bundle — skin here is a transitional
+        default; leaf 5 will strip it). theme.css: theme-owned polish. skin tokens.css:
+        resolved at runtime by semitexa/theme, loaded LAST so it overrides platform-ui's
+        default skin.
+    #}
+    <link rel="stylesheet" href="/assets/platform-ui/css/full.css">
+    <link rel="stylesheet" href="/assets/theme-sky/css/theme.css">
+    <link rel="stylesheet" href="{{ theme_skin_css() }}">
+    {{ semantic_head() }}
+    {{ asset_head() }}
+    {{ inject_scripts('head') }}
+    {% block head_extra %}{{ layout_slot('head_extra') }}{% endblock %}
+</head>
+<body sx-layout="stack" sx-gap="0" data-theme="{{ theme_info().theme|default('') }}" data-skin="{{ theme_info().skin|default('') }}"{{ __ssr_handle_attr|default('')|raw }}>
+
+    {% include '@project-layouts-theme-sky/partials/header.html.twig' %}
+
+    <main class="app-shell" sx-layout="stack" sx-gap="6" sx-padding="6">
+        {% block main %}{{ layout_slot('main_before') }}{{ main|default(content|default(''))|raw }}{{ layout_slot('main_after') }}{% endblock %}
+    </main>
+
+    {% include '@project-layouts-theme-sky/partials/footer.html.twig' %}
+
+    {{ asset_body() }}
+    {{ inject_scripts('body') }}
+</body>
+</html>

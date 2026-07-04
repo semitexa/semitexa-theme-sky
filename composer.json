@@ -1,0 +1,24 @@
+{
+    "name": "semitexa/theme-sky",
+    "description": "Sky theme for Semitexa — brand skin, base layout, and header/footer partials built on semitexa/platform-ui.",
+    "type": "semitexa-module",
+    "license": "MIT",
+    "require": {
+        "php": "^8.4",
+        "semitexa/core": "*",
+        "semitexa/ssr": "*",
+        "semitexa/platform-ui": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Semitexa\\ThemeSky\\": "src/"
+        }
+    },
+    "extra": {
+        "semitexa-module": {
+            "name": "theme-sky",
+            "template_alias": "theme-sky",
+            "description": "Sky theme — app layout + skin built on platform-ui"
+        }
+    }
+}

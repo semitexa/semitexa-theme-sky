@@ -1,0 +1,7 @@
+{
+    "$schema": "semitexa://theme/v1",
+    "id": "theme-sky",
+    "extends": "theme-base",
+    "active_when": { "tenant": "__sky_brand_parent__" },
+    "skin": "default"
+}

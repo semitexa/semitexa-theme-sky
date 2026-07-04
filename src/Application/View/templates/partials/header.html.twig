@@ -1,0 +1,13 @@
+<header sx-surface="panel" sx-padding="4">
+    <div class="app-shell" sx-layout="cluster" sx-justify="between" sx-align="center" sx-gap="6">
+        <a href="/" sx-layout="cluster" sx-gap="2" sx-align="center" style="text-decoration:none">
+            <span ui="badge" ui-tone="brand" ui-variant="solid">sky</span>
+            <span ui-text="title">Contacts</span>
+        </a>
+
+        <nav class="app-nav" sx-layout="cluster" sx-gap="2" aria-label="Primary">
+            <a href="/contacts"{% if active_nav|default('') == 'contacts' %} aria-current="page"{% endif %}>Contacts</a>
+            <a href="/contacts/new"{% if active_nav|default('') == 'contacts.new' %} aria-current="page"{% endif %}>New</a>
+        </nav>
+    </div>
+</header>
