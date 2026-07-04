@@ -20,5 +20,12 @@
             "template_alias": "theme-sky",
             "description": "Sky theme — app layout + skin built on platform-ui"
         }
-    }
+    },
+    "keywords": [
+        "semitexa",
+        "theme",
+        "skin",
+        "sky",
+        "tokens"
+    ]
 }
