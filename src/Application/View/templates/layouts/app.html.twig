@@ -10,8 +10,8 @@
         resolved at runtime by semitexa/theme, loaded LAST so it overrides platform-ui's
         default skin.
     #}
-    <link rel="stylesheet" href="/assets/platform-ui/css/full.css">
-    <link rel="stylesheet" href="/assets/theme-sky/css/theme.css">
+    <link rel="stylesheet" href="{{ asset('css/full.css', 'platform-ui') }}">
+    <link rel="stylesheet" href="{{ asset('css/theme.css', 'theme-sky') }}">
     <link rel="stylesheet" href="{{ theme_skin_css() }}">
     {{ semantic_head() }}
     {{ asset_head() }}
