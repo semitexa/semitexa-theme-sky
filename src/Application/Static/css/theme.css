@@ -64,8 +64,3 @@ body {
     border-color: var(--ui-state-danger);
 }
 
-/* Grid min-column override hook — see finding F-07 (grid slice hardcodes minmax(0, 1fr)).
- * Consumers can set --grid-min inline; theme rewrites grid-template-columns. */
-[sx-layout="grid"][style*="--grid-min"] {
-    grid-template-columns: repeat(auto-fit, minmax(var(--grid-min), 1fr));
-}
