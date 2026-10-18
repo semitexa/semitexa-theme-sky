@@ -43,7 +43,7 @@ final class ThemeSkyTemplatesTest extends TestCase
         $twig->registerUndefinedFunctionCallback(static fn (string $name): TwigFunction => new TwigFunction($name, static fn (): string => ''));
         $twig->registerUndefinedFilterCallback(static fn (string $name): TwigFilter => new TwigFilter($name, static fn (mixed $v): mixed => $v));
 
-        $twig->parse($twig->tokenize(new Source((string) file_get_contents($path), basename($path), $path)));
+        $twig->parse($twig->tokenize(new Source(self::read($path), basename($path), $path)));
         $this->addToAssertionCount(1);
     }
 
@@ -51,10 +51,34 @@ final class ThemeSkyTemplatesTest extends TestCase
     #[DataProvider('templates')]
     public function every_theme_asset_it_links_is_shipped(string $path): void
     {
-        preg_match_all("/asset\\('([^']+)',\\s*'theme-sky'\\)/", (string) file_get_contents($path), $m);
-        foreach ($m[1] as $asset) {
-            self::assertFileExists(self::ROOT . '/Static/' . $asset, "{$path} links {$asset}");
+        $static = realpath(self::ROOT . '/Static');
+        self::assertIsString($static, 'the theme ships a Static directory');
+
+        // Every asset() call naming this theme must be read as a literal pair,
+        // in either quote style and with any spacing; one this pattern cannot
+        // read fails the test instead of passing unchecked.
+        preg_match_all('/\basset\s*\(([^()]*)\)/', self::read($path), $calls);
+        foreach ($calls[1] as $args) {
+            if (!str_contains($args, 'theme-sky')) {
+                continue;
+            }
+            self::assertSame(1, preg_match('/\A\s*([\'"])([^\'"]+)\1\s*,\s*([\'"])theme-sky\3\s*\z/', $args, $m), "{$path} links a theme asset this test cannot read: asset({$args})");
+            $asset = $m[2];
+            $resolved = realpath($static . '/' . $asset);
+            self::assertTrue(
+                $resolved !== false && str_starts_with($resolved, $static . DIRECTORY_SEPARATOR) && is_file($resolved),
+                "{$path} links {$asset}, which is not a file inside Static",
+            );
         }
-        $this->addToAssertionCount(1);
+    }
+
+    private static function read(string $path): string
+    {
+        $text = file_get_contents($path);
+        if ($text === false) {
+            self::fail("{$path} cannot be read");
+        }
+
+        return $text;
     }
 }
