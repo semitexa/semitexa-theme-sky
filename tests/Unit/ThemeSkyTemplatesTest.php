@@ -59,7 +59,11 @@ final class ThemeSkyTemplatesTest extends TestCase
         // read fails the test instead of passing unchecked.
         preg_match_all('/\basset\s*\(([^()]*)\)/', self::read($path), $calls);
         foreach ($calls[1] as $args) {
-            if (!str_contains($args, 'theme-sky')) {
+            // Chosen by the package argument, the last one: a path that merely
+            // contains the name, asset('css/theme-sky.css', 'platform-ui'),
+            // belongs to another package.
+            $package = strrchr($args, ',');
+            if ($package === false || !str_contains($package, 'theme-sky')) {
                 continue;
             }
             self::assertSame(1, preg_match('/\A\s*([\'"])([^\'"]+)\1\s*,\s*([\'"])theme-sky\3\s*\z/', $args, $m), "{$path} links a theme asset this test cannot read: asset({$args})");
