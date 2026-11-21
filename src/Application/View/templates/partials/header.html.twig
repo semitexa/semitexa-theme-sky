@@ -4,10 +4,5 @@
             <span ui="badge" ui-tone="brand" ui-variant="solid">sky</span>
             <span ui-text="title">Contacts</span>
         </a>
-
-        <nav class="app-nav" sx-layout="cluster" sx-gap="2" aria-label="Primary">
-            <a href="/contacts"{% if active_nav|default('') == 'contacts' %} aria-current="page"{% endif %}>Contacts</a>
-            <a href="/contacts/new"{% if active_nav|default('') == 'contacts.new' %} aria-current="page"{% endif %}>New</a>
-        </nav>
     </div>
 </header>
